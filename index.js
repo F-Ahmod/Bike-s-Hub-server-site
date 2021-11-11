@@ -30,6 +30,7 @@ async function run (){
         const bookBiketCallection = database.collection('bookBike');
         const reviewCallection = database.collection('review');
         const usersCallection = database.collection('user');
+        const orderCallection = database.collection('user');
        
         
 
@@ -157,7 +158,7 @@ app.post("/addUserInfo", async (req, res) => {
   app.put("/statusUpdate/:id", async (req, res) => {
     const filter = { _id: ObjectId(req.params.id) };
     console.log(req.params.id);
-    const result = await ordersCollection.updateOne(filter, {
+    const result = await orderCallection.updateOne(filter, {
       $set: {
         status: req.body.status,
       },
