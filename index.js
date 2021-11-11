@@ -153,6 +153,19 @@ app.post("/addUserInfo", async (req, res) => {
   });
 
 
+  // status update
+  app.put("/statusUpdate/:id", async (req, res) => {
+    const filter = { _id: ObjectId(req.params.id) };
+    console.log(req.params.id);
+    const result = await ordersCollection.updateOne(filter, {
+      $set: {
+        status: req.body.status,
+      },
+    });
+    res.send(result);
+    console.log(result);
+  });
+
     //      post Api
     //      app.post('/cards/:id',async(req,res)=>{
     //          const dile=req.body;
