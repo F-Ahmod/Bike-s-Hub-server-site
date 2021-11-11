@@ -90,11 +90,24 @@ async function run (){
         res.send(user)
     }); 
 
+// get Api
+
+  app.get('/bookBike/:email',async(req,res)=>{
+  const email=req.params.email;
+  const qurey={email:email};
+  const result =await bookBiketCallection.deleteOne(qurey);
+  res.json(result);
+  
+
+})
+
+
+
        // delete Api
 
         app.delete('/bookBike/:email',async(req,res)=>{
-        const email=req.params.email;
-        const qurey={email:email};
+        const bikeId=req.params.id;
+        const qurey={_id:ObjectId(bikeId)};
         const result =await bookBiketCallection.deleteOne(qurey);
         res.json(result);
         
