@@ -95,7 +95,7 @@ async function run (){
   app.get('/bookBike/:email',async(req,res)=>{
   const email=req.params.email;
   const qurey={email:email};
-  const result =await bookBiketCallection.deleteOne(qurey);
+  const result =await bookBiketCallection.find(qurey).toArray();
   res.json(result);
   
 
