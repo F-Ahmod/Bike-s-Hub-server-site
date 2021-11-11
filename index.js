@@ -92,9 +92,9 @@ async function run (){
 
        // delete Api
 
-        app.delete('/bookBike/:id',async(req,res)=>{
-        const bikeId=req.params.id;
-        const qurey={_id:ObjectId(bikeId)};
+        app.delete('/bookBike/:email',async(req,res)=>{
+        const email=req.params.email;
+        const qurey={email:email};
         const result =await bookBiketCallection.deleteOne(qurey);
         res.json(result);
         
