@@ -106,15 +106,14 @@ async function run (){
 
 // get Api
 
-  app.get('/bookBike/:email',async(req,res)=>{
+  app.get('/book/:email',async(req,res)=>{
   const email=req.params.email;
-  const qurey={email:email};
+  const qurey={email:ObjectId(email)};
   const result =await bookBiketCallection.find(qurey).toArray();
   res.json(result);
   
 
 })
-
 
 
        // delete Api
@@ -162,21 +161,25 @@ app.post("/addUserInfo", async (req, res) => {
   app.get("/checkAdmin/:email", async (req, res) => {
     const result = await usersCallection.find({ email: req.params.email })
       .toArray();
-    // console.log(result);
     res.send(result);
   });
 
 
  // status update
   app.put("/bookBike/:id", async (req, res) => {
+    const id=req.params.id;
+    console.log(req)
     const filter = { _id: ObjectId(req.params.id) };
-    console.log(req.params.id);
-    const result = await bookBiketCallection.updateOne(filter, {
+    const options={upsert:true};
+    const updateDoc ={
       $set: {
         status: req.body.status,
-      },
-    });
-    res.send(result);
+      }
+    }
+    
+    const result = await bookBiketCallection.updateOne(filter,updateDoc,options 
+    );
+    res.json(result);
     console.log(result);
   });
 
