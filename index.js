@@ -106,7 +106,7 @@ async function run (){
 
 // get Api
 
-  app.get('/book/:email',async(req,res)=>{
+  app.get('/bookBike/:email',async(req,res)=>{
   const email=req.params.email;
   const qurey={email:ObjectId(email)};
   const result =await bookBiketCallection.find(qurey).toArray();
