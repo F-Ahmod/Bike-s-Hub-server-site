@@ -30,7 +30,8 @@ async function run (){
         const bookBiketCallection = database.collection('bookBike');
         const reviewCallection = database.collection('review');
         const usersCallection = database.collection('user');
-        const orderCallection = database.collection('orders');
+        const clintCallection = database.collection('clint');
+        
        
         
 
@@ -73,6 +74,18 @@ async function run (){
         res.send(user)
         
     });
+
+   
+     // get single
+     app.get('/bookBike/:id',async(req,res)=>{
+      const id =req.params.id;
+      const query ={_id:ObjectId(id)};
+      const options = {
+          projection: { _id: 0},
+        };
+      const result=await bookBiketCallection.findOne(query,options);
+      res.send(result)
+  });
 
 
     //  post Api for add to card
@@ -119,7 +132,7 @@ async function run (){
      app.post('/review',async(req,res)=>{
         const dile=req.body;
        const result =await reviewCallection.insertOne(dile);
-       console.log(result);
+      
        res.json(result)
 
 })
@@ -128,7 +141,7 @@ app.post("/addUserInfo", async (req, res) => {
     console.log("req.body");
     const result = await usersCallection.insertOne(req.body);
     res.send(result);
-    console.log(result);
+   
   });
 
 
@@ -140,7 +153,7 @@ app.post("/addUserInfo", async (req, res) => {
         $set: { role: "admin" },
       });
       
-      console.log(documents);
+     
     }
     res.send(result)
   });
@@ -149,16 +162,16 @@ app.post("/addUserInfo", async (req, res) => {
   app.get("/checkAdmin/:email", async (req, res) => {
     const result = await usersCallection.find({ email: req.params.email })
       .toArray();
-    console.log(result);
+    // console.log(result);
     res.send(result);
   });
 
 
-  // status update
-  app.put("/statusUpdate/:id", async (req, res) => {
+ // status update
+  app.put("/bookBike/:id", async (req, res) => {
     const filter = { _id: ObjectId(req.params.id) };
     console.log(req.params.id);
-    const result = await orderCallection.updateOne(filter, {
+    const result = await bookBiketCallection.updateOne(filter, {
       $set: {
         status: req.body.status,
       },
@@ -167,22 +180,19 @@ app.post("/addUserInfo", async (req, res) => {
     console.log(result);
   });
 
-    //      post Api
-    //      app.post('/cards/:id',async(req,res)=>{
-    //          const dile=req.body;
-    //         const result =await resultCallection.insertOne(dile);
-    //         res.json(result)
-    // })
+
+  // clint api get
+
+  app.get('/clint',async(req,res)=>{
+    const cursor=clintCallection.find({});
+    const user=await cursor.toArray();
+  
+    res.send(user)
+    
+});
 
 
-    // get api restaurent
-    // app.get('/restaurent',async(req,res)=>{
-    //     const cursor=restaurentCallection.find({});
-    //     const user=await cursor.toArray();
-      
-    //     res.send(user)
-        
-    // });
+    
 
         
 
