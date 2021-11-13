@@ -1,5 +1,4 @@
-// bikeshop
-//zXRo4Uobdq2Akgpj
+
 const express=require('express');
 const { MongoClient } = require('mongodb');
 
@@ -13,7 +12,9 @@ const cors =require('cors')
 app.use(cors());
 app.use(express.json());
 
-
+// app.use((req, res, next) => {
+//   res.header("Access-Control-Allow-Origin", "*")
+// }) 
 
 // cannect uri
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.n0kiz.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`;
@@ -134,7 +135,14 @@ async function run (){
       
        res.json(result)
 
-})
+});
+
+/// get all
+app.get('/review',async(req,res)=>{
+  const cursor=reviewCallection.find({});
+  const user=await cursor.toArray();
+  res.send(user)
+}); 
 
 app.post("/addUserInfo", async (req, res) => {
     console.log("req.body");
